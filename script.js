@@ -1,37 +1,70 @@
-function getComputerChoice() {
+const rockBtn = document.querySelector('.rock-btn');
+const paperBtn = document.querySelector('.paper-btn');
+const scissorsBtn = document.querySelector('.scissors-btn');
+const buttons = document.querySelectorAll('button');
+const resultContainer = document.querySelector('.result');
+let playerSelection = '';
+let computerSelection = '';
+
+buttons.forEach(button => {
+  button.addEventListener('click', (e) => {
+    updatePlayerSelection(e);
+    updateComputerSelection();
+    playRound(playerSelection, computerSelection);
+  });
+});
+
+function updatePlayerSelection(e){
+  playerSelection = e.target.textContent.toLowerCase();
+}
+
+function updateComputerSelection() {
   const rand = Math.floor(Math.random() * 3) + 1;
   if (rand === 1) {
-    return 'rock'
+    computerSelection =  'rock'
   } else if (rand === 2) {
-    return 'paper'
+    computerSelection = 'paper'
   } else {
-    return 'scissors';
+    computerSelection = 'scissors';
   }
 }
 
-let playerSelection = 'paper';
-let computerSelection = getComputerChoice();
-
 function playRound(playerSelection, computerSelection) {
+  console.log(playerSelection, computerSelection)
   if (playerSelection === 'rock' && computerSelection === 'scissors' ||
     playerSelection === 'paper' && computerSelection === 'rock' ||
     playerSelection === 'scissors' && computerSelection === 'paper') {
-    return `You win! ${playerSelection} beats ${computerSelection}`;
+    updateDisplay('playerWin');
   } 
   else if (playerSelection === 'rock' && computerSelection === 'paper' ||
     playerSelection === 'paper' && computerSelection === 'scissors' ||
     playerSelection === 'scissors' && computerSelection === 'rock') {
-    return `You lose! ${computerSelection} beats ${playerSelection}`;
+    updateDisplay('computerWin');
   }
   else{
-    return `It's a tie!`;
+    updateDisplay('tie');
   }
 }
 
-function game(){
-  for(let i = 0; i < 5; i++){
-    playerSelection = prompt('Rock, paper, or scissors?').toLowerCase();
-    computerSelection = getComputerChoice();
-    console.log(playRound(playerSelection, computerSelection));
+function updateDisplay(outcome){
+  switch(outcome){
+    case 'playerWin':
+      console.log('player');
+      break;
+    case 'computerWin':
+      console.log('computer');
+      break;
+    case 'tie':
+      console.log('tie');
+      break;
   }
 }
+
+
+
+
+
+
+
+
+
