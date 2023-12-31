@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.scoreboard,
+.result{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.result {
+  margin-bottom: 25px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  margin-bottom: 30px;
+}
+
+.endgame-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabled{
+  opacity: 0.3;
+}
+
+.hidden{
+  opacity: 0;
+}

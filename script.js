@@ -2,8 +2,13 @@ const rockBtn = document.querySelector('.rock-btn');
 const paperBtn = document.querySelector('.paper-btn');
 const scissorsBtn = document.querySelector('.scissors-btn');
 const buttons = document.querySelectorAll('button');
+const gameButtons = document.querySelectorAll('.game-btn');
 const resultContainer = document.querySelector('.result');
+const scoreboard = document.querySelector('.scoreboard')
 const winMessage = document.querySelector('.win-message');
+const endgameContainer = document.querySelector('.endgame-container');
+const resetButton = document.querySelector('.reset-button');
+resetButton.classList.add('hidden');
 let playerSelection = '';
 let computerSelection = '';
 let playerWins = 0;
@@ -12,19 +17,19 @@ let computerWins = 0;
 window.addEventListener('load', addButtonEvents);
 
 
-function addButtonEvents(){
+function addButtonEvents() {
   buttons.forEach(button => {
     button.addEventListener('click', buttonClickHandler);
   })
 }
 
-function buttonClickHandler(e){
+function buttonClickHandler(e) {
   updatePlayerSelection(e);
   updateComputerSelection();
   playRound(playerSelection, computerSelection);
 }
 
-function removeButtonEvents(){
+function removeButtonEvents() {
   buttons.forEach(button => {
     button.removeEventListener('click', buttonClickHandler);
   });
@@ -71,14 +76,11 @@ function updateScore(outcome) {
   switch (outcome) {
     case 'playerWin':
       playerWins++;
-      console.log(`player wins: ${playerWins}`);
       break;
     case 'computerWin':
       computerWins++;
-      console.log(`computer wins: ${computerWins}`);
       break;
     case 'tie':
-      console.log('tie');
       break;
   }
 }
@@ -87,23 +89,18 @@ function updateDisplay(outcome) {
   switch (outcome) {
     case 'playerWin':
       resultContainer.textContent = `
-        You win! ${playerSelection} beats ${computerSelection}.
-        Player score: ${playerWins}
-        Computer score: ${computerWins}`;
+        You win! ${playerSelection} beats ${computerSelection}.`;
       break;
     case 'computerWin':
       resultContainer.textContent = `
-        You lose! ${computerSelection} beats ${playerSelection}. 
-        Player score: ${playerWins}
-        Computer score: ${computerWins}`;
+        You lose! ${computerSelection} beats ${playerSelection}.`;
       break;
     case 'tie':
       resultContainer.textContent =
-        `It's a tie! 
-      Player score: ${playerWins}
-      Computer score: ${computerWins}`;
+        `It's a tie!`;
       break;
   }
+  scoreboard.textContent = `${playerWins} - ${computerWins}`;
 }
 
 function checkGameOver() {
@@ -114,23 +111,44 @@ function checkGameOver() {
 
 function gameOver() {
   if (playerWins === 5) {
-    winMessage.textContent = 'You won the game!';
+    winMessage.textContent = 'Game over. You won!';
   } else {
-    winMessage.textContent = 'You lost the game!';
+    winMessage.textContent = 'Game over. You lost!';
   }
-  const resetButton = document.createElement('button');
-  resetButton.textContent = 'Reset';
-  winMessage.appendChild(resetButton);
+  console.log('gameover')
   resetButton.addEventListener('click', resetGame);
   removeButtonEvents();
+  toggleDisabledStyles();
+  toggleResetButton();
 }
+
 
 function resetGame() {
   playerWins = 0;
   computerWins = 0;
   winMessage.textContent = '';
   resultContainer.textContent = '';
+  scoreboard.textContent = '0 - 0';
+  endgameContainer.removeChild(resetButton);
+  addButtonEvents();
+  toggleDisabledStyles();
+  toggleResetButton();
 }
+
+function toggleDisabledStyles() {
+  gameButtons.forEach(button => {
+    button.classList.toggle('disabled');
+  });
+}
+
+function toggleResetButton() {
+  console.log('toggle button');
+  resetButton.classList.toggle('hidden');
+}
+
+
+
+
 
 
 
