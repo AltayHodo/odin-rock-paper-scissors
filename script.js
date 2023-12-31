@@ -5,6 +5,8 @@ const buttons = document.querySelectorAll('button');
 const resultContainer = document.querySelector('.result');
 let playerSelection = '';
 let computerSelection = '';
+let playerWins = 0;
+let computerWins = 0;
 
 buttons.forEach(button => {
   button.addEventListener('click', (e) => {
@@ -30,32 +32,59 @@ function updateComputerSelection() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  console.log(playerSelection, computerSelection)
   if (playerSelection === 'rock' && computerSelection === 'scissors' ||
     playerSelection === 'paper' && computerSelection === 'rock' ||
     playerSelection === 'scissors' && computerSelection === 'paper') {
+    updateScore('playerWin');
     updateDisplay('playerWin');
   } 
   else if (playerSelection === 'rock' && computerSelection === 'paper' ||
     playerSelection === 'paper' && computerSelection === 'scissors' ||
     playerSelection === 'scissors' && computerSelection === 'rock') {
+    updateScore('computerWin');
     updateDisplay('computerWin');
   }
   else{
+    updateScore('tie');
     updateDisplay('tie');
+  }
+}
+
+function updateScore(outcome){
+  switch(outcome){
+    case 'playerWin':
+      playerWins++;
+      console.log(`player wins: ${playerWins}`);
+      break;
+    case 'computerWin':
+      computerWins++;
+      console.log(`computer wins: ${computerWins}`);
+      break;
+    case 'tie':
+      console.log('tie');
+      break;
   }
 }
 
 function updateDisplay(outcome){
   switch(outcome){
     case 'playerWin':
-      console.log('player');
+      resultContainer.textContent = `
+        You win! ${playerSelection} beats ${computerSelection}.
+        Player score: ${playerWins}
+        Computer score: ${computerWins}`;
       break;
     case 'computerWin':
-      console.log('computer');
+      resultContainer.textContent = `
+        You lose! ${computerSelection} beats ${playerSelection}. 
+        Player score: ${playerWins}
+        Computer score: ${computerWins}`;
       break;
     case 'tie':
-      console.log('tie');
+      resultContainer.textContent = 
+      `It's a tie! 
+      Player score: ${playerWins}
+      Computer score: ${computerWins}`;
       break;
   }
 }
