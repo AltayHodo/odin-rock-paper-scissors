@@ -4,11 +4,12 @@ const scissorsBtn = document.querySelector('.scissors-btn');
 const buttons = document.querySelectorAll('button');
 const gameButtons = document.querySelectorAll('.game-btn');
 const resultContainer = document.querySelector('.result');
-const scoreboard = document.querySelector('.scoreboard')
+const scoreboard = document.querySelector('.scoreboard');
 const winMessage = document.querySelector('.win-message');
 const endgameContainer = document.querySelector('.endgame-container');
 const resetButton = document.querySelector('.reset-button');
 resetButton.classList.add('hidden');
+resetButton.disabled = true;
 let playerSelection = '';
 let computerSelection = '';
 let playerWins = 0;
@@ -115,7 +116,6 @@ function gameOver() {
   } else {
     winMessage.textContent = 'Game over. You lost!';
   }
-  console.log('gameover')
   resetButton.addEventListener('click', resetGame);
   removeButtonEvents();
   toggleDisabledStyles();
@@ -129,7 +129,6 @@ function resetGame() {
   winMessage.textContent = '';
   resultContainer.textContent = '';
   scoreboard.textContent = '0 - 0';
-  endgameContainer.removeChild(resetButton);
   addButtonEvents();
   toggleDisabledStyles();
   toggleResetButton();
@@ -137,14 +136,15 @@ function resetGame() {
 
 function toggleDisabledStyles() {
   gameButtons.forEach(button => {
-    button.classList.toggle('disabled');
+    button.classList.toggle('disable');
   });
 }
 
 function toggleResetButton() {
-  console.log('toggle button');
   resetButton.classList.toggle('hidden');
+  resetButton.disabled = resetButton.disabled === false ? true : false;
 }
+
 
 
 
