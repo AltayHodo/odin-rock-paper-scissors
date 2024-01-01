@@ -1,8 +1,4 @@
-const rockBtn = document.querySelector('.rock-btn');
-const paperBtn = document.querySelector('.paper-btn');
-const scissorsBtn = document.querySelector('.scissors-btn');
-const buttons = document.querySelectorAll('button');
-const gameButtons = document.querySelectorAll('.game-btn');
+const gameButtons = document.querySelectorAll('.button-container');
 const resultContainer = document.querySelector('.result');
 const scoreboard = document.querySelector('.scoreboard');
 const winMessage = document.querySelector('.win-message');
@@ -19,7 +15,7 @@ window.addEventListener('load', addButtonEvents);
 
 
 function addButtonEvents() {
-  buttons.forEach(button => {
+  gameButtons.forEach(button => {
     button.addEventListener('click', buttonClickHandler);
   })
 }
@@ -31,7 +27,7 @@ function buttonClickHandler(e) {
 }
 
 function removeButtonEvents() {
-  buttons.forEach(button => {
+  gameButtons.forEach(button => {
     button.removeEventListener('click', buttonClickHandler);
   });
 }
@@ -39,7 +35,11 @@ function removeButtonEvents() {
 
 
 function updatePlayerSelection(e) {
-  playerSelection = e.target.textContent.toLowerCase();
+  if(e.target.tagName === 'IMG'){
+    playerSelection = e.target.alt.toLowerCase();
+  } else{
+    playerSelection = e.target.textContent.toLowerCase();
+  }
 }
 
 function updateComputerSelection() {
@@ -113,12 +113,13 @@ function checkGameOver() {
 function gameOver() {
   if (playerWins === 5) {
     winMessage.textContent = 'Game over. You won!';
+    winMessage.style.color = 'green';
   } else {
     winMessage.textContent = 'Game over. You lost!';
+    winMessage.style.color = 'red';
   }
   resetButton.addEventListener('click', resetGame);
   removeButtonEvents();
-  toggleDisabledStyles();
   toggleResetButton();
 }
 
@@ -130,14 +131,7 @@ function resetGame() {
   resultContainer.textContent = '';
   scoreboard.textContent = '0 - 0';
   addButtonEvents();
-  toggleDisabledStyles();
   toggleResetButton();
-}
-
-function toggleDisabledStyles() {
-  gameButtons.forEach(button => {
-    button.classList.toggle('disable');
-  });
 }
 
 function toggleResetButton() {
